@@ -199,6 +199,39 @@
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
 
+
+  // Add this to discord-notify.js or inline in each page
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Track all buttons with click events
+  yesBtn.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      const buttonText = this.textContent.trim();
+      const buttonHref = this.href || 'No link';
+      const buttonClass = this.className;
+      
+      // Send to Discord
+      fetch('https://discord.com/api/webhooks/1464428947008917636/OJtifCAHZyld6_F_rGJ8Ah_F7-BhnZYGNiGsJ85K_VGhztvkUWvK4S-K7GynzTPfG6XI', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [{
+            title: '🖱️ Button Clicked - Vertex Global',
+            color: 16744272, // Orange color for clicks
+            fields: [
+              { name: '🔘 Button Text', value: buttonText, inline: true },
+              { name: '🔗 Link/Action', value: buttonHref, inline: true },
+              { name: '📍 Page', value: window.location.href, inline: false },
+              { name: '🕐 Time', value: new Date().toLocaleString(), inline: true }
+            ],
+            timestamp: new Date().toISOString()
+          }]
+        })
+      });
+    });
+  });
+});
+
     /* ---------- CONFETTI (FIXED FULL SCREEN) ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
 
